@@ -1,0 +1,65 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: Larry Williams - 3 médias
+
+Definição: Com a média simples de 21 períodos ascendente, comprar ao tocar na média das mínimas de 3 períodos. Com a média simples de 21 períodos descendente, vender ao tocar na média das máximas de 3 períodos.
+
+*************************** INICIO DO CÓDIGO ***************************
+input
+  nbarrastop(5);
+  //Número de barras para sair do trade ao utilizar stop no tempo;
+  stoptempo(2);
+  //Utilizar stop no tempo:                           1 - sim; 2 - não;
+  goshort(1);
+  //Operar vendido ou não                             1 - sim; 2 - não;
+var
+  nbarra   : integer;
+  stoploss : float;
+Inicio
+  If (IsBought) or (IsSold) então
+    Inicio
+      if (BuyPosition > 0) then
+        Inicio
+          //stop no tempo
+          if (currentbar - nbarra > nbarrastop - 1) and (stoptempo = 1) then
+            begin
+              closeposition;
+            end;
+          if (abertura >= (media(3,high))) então
+            begin
+              closeposition;
+            end; 
+          SellToCoverStop(media(3,high),media(3,high)); 
+          end;
+      if (sellposition > 0) then
+        begin
+          //stop no tempo
+          if (currentbar - nbarra > nbarrastop - 1) and (stoptempo = 1) then
+            begin
+              closeposition;
+            end;
+          if (abertura <= (media(3,low))) então
+            begin
+              closeposition;
+            end; 
+          BuyToCoverStop(media(3,low),media(3,low));
+          end;
+     end
+  Else if (IsBought = false) and (IsSold = false) then
+    Inicio
+      if (media(21,close) > media(21,close)[1]) then
+        begin
+          BuyStop(media(3,low),media(3,low));
+          nbarra := CurrentBar;
+        end;
+      //operação vendida
+      if (media(21,close) < media(21,close)[1]) and (goshort = 1) then
+        begin
+          SellShortStop(media(3,high),media(3,high));
+          nbarra := currentbar;
+        end;
+    end;
+end;
