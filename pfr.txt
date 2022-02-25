@@ -1,0 +1,38 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: Preço de Fechamento de Reversão
+
+Definição: Candle que tem sua mínima menor que a dos dois últimos candles, e seu fechamento é maior do que o fechamento anterior. Compra 
+no rompimento da máxima.
+
+*************************** INICIO DO CÓDIGO ***************************
+var
+pCompra: Float;
+stopLoss: Float;
+alvo: Float;
+
+begin
+    If (IsBought) then
+        begin
+            se (abertura > alvo) então
+            SellToCoverStop(abertura,abertura);
+            SellToCoverStop(alvo, alvo);
+            SellToCoverStop(stopLoss, stopLoss);
+        End
+    Else //Definição tendencia + compra
+        begin
+            if (Minima < lowest(Low,2)[1]) and (Fechamento > Fechamento[1]) and (Fechamento[1] < Abertura[1]) and (SlowStochastic(8) < 20) then
+            BuyStop(maxima,maxima);
+            if (fechamento <= stopLoss) then 
+                begin
+                    closeposition;
+                end;
+            //parametros de stop e alvo
+            pCompra:= maxima;
+            stopLoss:= minima ;
+            alvo:= (pCompra-minima)*1.3 + pcompra;
+        end ;
+end;

@@ -1,0 +1,74 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: Larry Williams - 9.3 (long e short, respectivamente)
+
+Definição: Com a média exponencial de 9 períodos descrescente, esperar o momento que ela inflexione. Compra no rompimento da máxima do candle
+que inflexionou a média.
+Definição: Com a média exponencial de 9 períodos ascendente, espera-se um fechamento mais alto (candle de referência) que seja seguido de, no mínimo,
+dois fechamentos abaixo do fechamento do candle de referência. Compra no rompimento da máxima do último candle.
+
+*************************** INICIO DO CÓDIGO (long) ***************************
+var
+  compra, venda, stoploss : Float;
+  media9 : boolean;
+    Inicio
+    media9 := (MediaExp(9,Close) > MediaExp(9,Close)[1]) e (MediaExp(9,Close)[1] > MediaExp(9,Close)[2]) e (MediaExp(9,Close)[2] > MediaExp(9,Close)[3]) 
+    e (MediaExp(9,Close)[3] > MediaExp(9,Close)[4]);
+    Se (IsBought) então
+    Inicio
+      //parametro stop
+      venda := minima[1] - 0.01;
+      Se (MediaExp(9,Close) < MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] < mediaexp(9,close)[2]) então
+        SellToCoverStop(venda,venda);
+      Se (MediaExp(9,Close) < MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] < mediaexp(9,close)[2]) e (abertura < minima[1]) então
+        SellToCoverStop(abertura,abertura);
+      Selltocoverstop(stoploss,stoploss);
+    Fim
+  Senão 
+    Inicio
+      //compra com 2 candles de recuo
+      Se (media9) e (Fechamento[1] < Fechamento[3]) e (Fechamento[2] < Fechamento [3]) então Buystop(compra,compra)
+      //compra com 3 candles de recuo
+      Senão se (media9) e (Fechamento[1] < Fechamento[4]) e (Fechamento[2] < Fechamento[4]) e (Fechamento[3] < Fechamento[4])
+      então Buystop(compra,compra);
+      //parametros 
+      compra := maxima + 0.01;
+      stoploss := minima[1] - 0.01;
+    Fim;
+Fim;
+
+
+*************************** INICIO DO CÓDIGO (short) ***************************
+var
+  compra : Float;
+  venda  : float;
+  stoploss : float;
+  media9 : boolean;
+    Inicio
+    media9 := (MediaExp(9,Close) < MediaExp(9,Close)[1]) e (MediaExp(9,Close)[1] < MediaExp(9,Close)[2]) e (MediaExp(9,Close)[2] < MediaExp(9,Close)[3]) 
+    e (MediaExp(9,Close)[3] < MediaExp(9,Close)[4]);
+    Se (IsSold) então
+        Inicio
+        //parametro stop
+        compra := maxima[1] + 0.01;
+        Se (MediaExp(9,Close) > MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] > mediaexp(9,close)[2]) então
+            BuyToCoverStop(compra,compra);
+        Se (MediaExp(9,Close) > MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] > mediaexp(9,close)[2]) e (abertura > Maxima[1]) então
+            BuyToCoverStop(abertura,abertura);
+        BuyToCoverStop(stoploss,stoploss);
+        Fim
+    Senão 
+    Inicio
+        //venda com 2 candles de recuo
+        Se (media9) e (Fechamento[1] > Fechamento[3]) e (Fechamento[2] > Fechamento [3]) então SellShortstop(venda,venda)
+        //venda com 3 candles de recuo
+        Senão se (media9) e (Fechamento[1] > Fechamento[4]) e (Fechamento[2] > Fechamento[4]) e (Fechamento[3] > Fechamento[4])
+        então SellShortstop(venda,venda);
+        //parametros 
+        venda := minima - 0.01;
+        stoploss := maxima[1] + 0.01;
+        Fim;
+    Fim;

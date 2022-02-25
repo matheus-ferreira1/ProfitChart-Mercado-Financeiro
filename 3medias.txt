@@ -5,7 +5,8 @@ Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
 
 Setup: Larry Williams - 3 médias
 
-Definição: Com a média simples de 21 períodos ascendente, comprar ao tocar na média das mínimas de 3 períodos. Com a média simples de 21 períodos descendente, vender ao tocar na média das máximas de 3 períodos.
+Definição: Com a média simples de 21 períodos ascendente, comprar ao tocar na média das mínimas de 3 períodos. Venda ao tocar na média
+das máximas de 3 períodos.
 
 *************************** INICIO DO CÓDIGO ***************************
 input

@@ -1,0 +1,34 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: 123 de compra
+
+Definição: Formação de três candles que formam um fundo. Mínima do candle atual é maior que a do candle anterior, que tem sua mínima
+menor que a do candle anterior, junto com o indicador estocástico lento de N períodos abaixo de 20. Compra na máxima do último candle.
+
+*************************** INICIO DO CÓDIGO ***************************
+var
+vprice: Float;
+barraCompra : integer;
+stopLoss: Float;
+alvo: Float;
+
+Inicio
+    Se (IsBought) então
+        Inicio
+            SellToCoverStop(alvo, alvo);
+            SellToCoverStop(stopLoss, stopLoss);
+            se (abertura > alvo) então
+            SellToCoverStop(abertura,abertura);
+        Fim
+    Senão
+        Inicio
+            Se (Minima[1] < Minima[2]) e (Minima > Minima[1]) e (SlowStochastic(8) < 20) então
+            BuyStop(maxima,maxima);
+            //parametros de stop e alvo
+            stopLoss:= minima;
+            alvo:= (maxima-minima)*1.6 + maxima;
+        Fim;
+Fim;

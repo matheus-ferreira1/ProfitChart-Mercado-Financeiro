@@ -1,0 +1,63 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: Larry Williams - 9.1 (long e short, respectivamente)
+
+Definição: Com a média exponencial de 9 períodos descrescente, esperar o momento que ela inflexione. Compra no rompimento da máxima do candle
+que inflexionou a média.
+
+*************************** INICIO DO CÓDIGO (long) ***************************
+var
+  compra : Float;
+  venda  : float;
+  media9 : boolean;
+Inicio
+media9 := (MediaExp(9,Close) > MediaExp(9,Close)[1]) e (MediaExp(9,Close)[1] > MediaExp(9,Close)[2]) e (MediaExp(9,Close)[2] < MediaExp(9,Close)[3]);
+  Se (IsBought) então
+    Inicio
+      //parametro stop
+      venda := minima[1] - 0.01;
+      Se (MediaExp(9,Close) < MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] < mediaexp(9,close)[2]) então
+        SellToCoverStop(venda,venda);
+      Se (MediaExp(9,Close) < MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] < mediaexp(9,close)[2]) e (abertura < minima[1]) então
+        SellToCoverStop(abertura,abertura);
+    Fim
+  Senão 
+    Inicio
+      //abertura em gap (caso não queira entrar em um gap de alta, excluir linha abaixo)
+      Se (media9) e (abertura > maxima[1]) então BuyStop(Abertura,Abertura) 
+      Senão Se (media9) então BuyStop(compra,compra);
+      //parametros start
+      compra := (maxima) + 0.01;
+    Fim;
+Fim;
+
+
+*************************** INICIO DO CÓDIGO (short) ***************************
+var
+  compra : Float;
+  venda  : float;
+  media9 : boolean;
+Inicio
+media9 := (MediaExp(9,Close) < MediaExp(9,Close)[1]) e (MediaExp(9,Close)[1] < MediaExp(9,Close)[2]) e (MediaExp(9,Close)[2] > MediaExp(9,Close)[3]);
+  Se (Issold) então
+    Inicio
+      //parametro stop
+      compra := maxima[1] + 0.01;
+      Se (MediaExp(9,Close) > MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] > mediaexp(9,close)[2]) e (abertura > maxima[1]) então
+        BuyToCoverStop(abertura,abertura) 
+      Senão se (MediaExp(9,Close) > MediaExp(9,Close)[1]) e (mediaexp(9,close)[1] > mediaexp(9,close)[2]) então
+        BuyToCoverStop(compra,compra);
+      
+    Fim
+  Senão 
+    Inicio
+      //abertura em gap (caso não queira entrar em um gap de baixa, excluir linha abaixo)
+      Se (media9) e (abertura < minima[1]) então SellShortStop(Abertura,Abertura) 
+      Senão se (media9) então Sellshortstop(venda,venda);
+      //parametros start
+      venda := (minima) - 0.01;
+    Fim;
+Fim;

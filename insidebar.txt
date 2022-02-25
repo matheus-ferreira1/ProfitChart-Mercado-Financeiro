@@ -1,0 +1,35 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: Insidebar
+
+Definição: Candle que está completamente envolvido pela máxima e mínima do candle anterior. Compra no compimento da máxima.
+
+*************************** INICIO DO CÓDIGO ***************************
+var
+pCompra: Float;
+stopLoss: Float;
+alvo: Float;
+
+begin
+    If (IsBought) then
+    begin
+        SellToCoverStop(alvo, alvo);
+        SellToCoverStop(stopLoss, stopLoss);
+        se (abertura > alvo) então
+            SellToCoverStop(abertura,abertura);
+    End
+    Else 
+    begin
+        if (HIGH < HIGH[1]) and (LOW > LOW[1]) and (SlowStochastic(8) < 20) then
+        BuyStop(maxima,maxima);
+        //parametros de stop e alvo
+        pCompra:= maxima;
+        stopLoss:= minima ;
+        alvo:= (pCompra-minima)*1 + pcompra;
+    end ;
+end;
+
+

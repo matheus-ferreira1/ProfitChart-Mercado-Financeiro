@@ -1,0 +1,25 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: IFR2 Quantitativo
+
+Definição: Compra quando o indicador IFR2 for menor que o IFR2 dos últimos N períodos. Saída na máxima dos últimos 2 candles.
+
+*************************** INICIO DO CÓDIGO ***************************
+Inicio
+  Se (IsBought) então
+    Inicio
+        //saída da operação na regra 2 ultimas máximas
+        se (abertura > (Highest(high, 2)[1])) então
+           SellToCoverStop(abertura,abertura);
+        Se (maxima >= (Highest(high, 2)[1])) então
+           SellToCoverStop(Highest(high, 2)[1],Highest(high, 2)[1]);
+    Fim
+  Senão
+    Inicio
+      Se (rsi(2,0) < lowest(rsi(2,0),10)[1]) então
+        BuyAtMarket;
+    Fim;
+Fim;

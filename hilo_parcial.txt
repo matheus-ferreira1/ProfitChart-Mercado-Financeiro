@@ -1,0 +1,51 @@
+Programação para ProfitChart - Plataforma de operações no mercado financeiro
+
+Linguagem utilizada: Nelogica Trading System Language (EasyLanguage)
+
+
+Setup: HiLo (com alvo parcial)
+
+Definição: Compra quando candle atual abre acima do Hilo Activator de N períodos, e tem mínima menor que o indicador. Alvo parcial
+pode ser definido pelo operador.
+
+*************************** INICIO DO CÓDIGO ***************************
+const
+  AlvoFiboParcial = 1.61;   // Alvo parcial
+  AlvoFiboTotal = 2;        // Alvo final
+  LoteTotal = 2;            // Lote total
+  LoteParcial = 1;          // Lote 
+
+var
+  SinalC : Boolean;  
+  StopC,Alvo1,Alvo2,h1,Amp  : Real;
+  b : inteiro;
+Inicio
+  
+  b := BuyPosition;
+  h1 := HiloActivator(3);
+ 
+  SinalC := (Minima < h1) e (Abertura > h1) e
+            (Fechamento < h1) e (Maxima > h1);
+  Se (BuyPosition = 0) e SinalC entao PaintBar(clVerde);
+  
+  Se (BuyPosition = 0) e SinalC entao
+    inicio
+      Amp := Maxima - Minima;
+      StopC := Minima;
+      Alvo1 := Maxima + (Amp * AlvoFiboParcial);
+      Alvo2 := Maxima + (Amp * AlvoFiboTotal);
+      BuyStop(Maxima,Maxima,LoteTotal*Lote);
+    fim;
+  
+  Se (IsBought) entao
+    inicio
+      Se b = LoteTotal entao SellToCoverLimit(Alvo1,LoteParcial*Lote);
+      b := BuyPosition;
+      Se b = (LoteTotal-LoteParcial) entao SellToCoverLimit(Alvo2,(LoteTotal-LoteParcial)*Lote);
+      SellToCoverStop(StopC,StopC,b*Lote);
+      Se (Minima < StopC) entao ClosePosition;
+      // Fechar posições ao final do dia
+      Se (time >= 1645) entao
+        ClosePosition;
+    fim;     
+Fim; 
