@@ -5,7 +5,7 @@ Os códigos aqui apresentados podem ser utilizados para screening, inserção de
 
 ### Desafio
 Esta foi a minha primeira experiência profissional com programação. Foi necessário utilizar conhecimentos sobre lógica de programação e algoritmos para que a execução do código seguisse fielmente o proposto, visto que a má execução do mesmo acarretaria em dados estatisticos errados, indicadores apontando pontos falsos e alertas em momentos incorretos.
-Cada código foi desenvolvido seguindo a descrição do *setup* descrita na literatura, ou seguindo especificações estipuladas pelo cliente.
+Cada código foi desenvolvido seguindo a configuração do *setup* descrita na literatura, ou seguindo especificações estipuladas pelo cliente.
 
 Atualmente ainda desenvolvo pontualmente estes códigos sob demanda. A plataforma agora disponibiliza a opção de manter o código oculto e com data de validade, garantindo os direitos do desenvolvedor.
 
