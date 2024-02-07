@@ -1,11 +1,9 @@
 # ProfitChart (mercado financeiro)
-Este repositório contém projetos realizados atuando como freelancer, desenvolvendo códigos para serem utilizados na plataforma de operações em bolsa ProfitChart (Nelogica). Esta plataforma utiliza a linguagem de programação **NTSL (Nelogica Trading System Language)**, baseado em EasyLanguage criado pela TradeStation.
+Este repositório contém alguns projetos realizados atuando como freelancer, desenvolvendo códigos para serem utilizados na plataforma de operações em bolsa ProfitChart (Nelogica). Esta plataforma utiliza a linguagem de programação **NTSL (Nelogica Trading System Language)**, baseado em EasyLanguage criado pela TradeStation.
 
 Os códigos aqui apresentados podem ser utilizados para automação de operações, screening, inserção de indicadores personalizados, backtesting, etc.
 
-### Desafio
-Esta foi a minha primeira experiência profissional com programação. Foi necessário utilizar conhecimentos sobre lógica de programação e algoritmos para que a execução do código seguisse fielmente o proposto, visto que a má execução do mesmo acarretaria em dados estatisticos errados, indicadores apontando pontos falsos e alertas em momentos incorretos.
-Cada código foi desenvolvido seguindo a configuração do *setup* descrita na literatura, ou seguindo especificações estipuladas pelo cliente.
+Caso tenha interesse em mais informações sobre desenvolvimento, entre em contato através do e-mail: bailamostech@gmail.com
 
 Atualmente ainda desenvolvo pontualmente estes códigos sob demanda. A plataforma agora disponibiliza a opção de exportar o código mantê-lo oculto e com data de validade, garantindo os direitos do desenvolvedor.
 
@@ -22,6 +20,5 @@ Atualmente ainda desenvolvo pontualmente estes códigos sob demanda. A plataform
 * [123 de compra](https://github.com/matheus-ferreira1/ProfitChart-Mercado-Financeiro/blob/main/setup123.txt)
 * [Preço de Fechamento de Reversão](https://github.com/matheus-ferreira1/ProfitChart-Mercado-Financeiro/blob/main/pfr.txt)
 
-OBS: escolhi por manter os arquivos em formato .txt para que a identação seja mantida fiel ao que é utilizado nas plataformas operacionas.
 
 *Disclaimer: O conteúdo aqui apresentado é de cunho ilustrativo/educacional e não constitui análise ou recomendação de compra ou venda de ativos do mercado financeiro.*
